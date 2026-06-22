@@ -2,6 +2,14 @@
 
 Search Brazilian medications by name or active ingredient and view manufacturer, presentation, and the government-regulated maximum price - on clean, SEO-friendly pages.
 
+## Screenshots
+
+![Home](screenshots/home.png)
+
+| Search & results | Medication detail |
+|---|---|
+| ![Search and results](screenshots/search.png) | ![Medication detail](screenshots/detail.png) |
+
 ## Features
 - Search by medication name or active ingredient, with pagination
 - Detail pages with manufacturer, presentation, regulated price, and ANVISA registration
