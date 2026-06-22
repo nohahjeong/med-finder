@@ -2,13 +2,13 @@
 
 Search Brazilian medications by name or active ingredient and view manufacturer, presentation, and the government-regulated maximum price - on clean, SEO-friendly pages.
 
-**Work in progress** - Laravel scaffold and sample data are in place; search, detail pages, and import are coming next.
+**Work in progress** — Laravel scaffold, sample data, and import are in place; search and detail pages are coming next.
 
 ## Features (planned)
 - Search by medication name or active ingredient, with pagination
 - Detail pages with manufacturer, presentation, regulated price
 - SEO-friendly URLs + per-page meta tags + JSON-LD (`schema.org/Drug`)
-- Data imported from Brazilian open data via an Artisan command
+- Data imported from Brazilian open data via `medications:import`
 
 ## Tech
 - Laravel 13 (PHP 8.3) · Blade · MySQL
@@ -20,6 +20,7 @@ cp .env.example .env
 php artisan key:generate
 # configure DB in .env, then:
 php artisan migrate
+php artisan medications:import
 npm install && npm run build
 php artisan serve
 ```

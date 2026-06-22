@@ -23,7 +23,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index('name');
-            $table->index('active_ingredient');
         });
     }
 
