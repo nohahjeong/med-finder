@@ -7,4 +7,45 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-accent: #36adec;
+    --color-accent-hover: #2890d4;
+    --color-accent-soft: #eef6fd;
+    --color-canvas: #f3f2ee;
+}
+
+@layer base {
+    body {
+        background-color: var(--color-canvas);
+        background-image:
+            radial-gradient(ellipse 90% 60% at 50% -10%, rgb(54 173 236 / 0.08), transparent 55%),
+            radial-gradient(ellipse 50% 40% at 100% 0%, rgb(54 173 236 / 0.05), transparent 50%),
+            radial-gradient(ellipse 40% 30% at 0% 100%, rgb(120 113 108 / 0.05), transparent 50%);
+    }
+}
+
+@layer components {
+    .card {
+        @apply flex min-h-0 flex-1 flex-col overflow-hidden rounded-3xl bg-white shadow-[0_8px_40px_rgb(28_25_23/0.06)];
+    }
+
+    .input-field {
+        @apply w-full rounded-xl border border-stone-200 bg-stone-50/60 px-4 py-3.5 text-base text-stone-900 placeholder:text-stone-400 transition focus:border-accent focus:bg-white focus:outline-none focus:ring-4 focus:ring-accent/10;
+    }
+
+    .btn-primary {
+        @apply inline-flex shrink-0 items-center justify-center rounded-xl border-2 border-accent bg-accent px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:border-accent-hover hover:bg-accent-hover focus:outline-none focus:ring-4 focus:ring-accent/20;
+    }
+
+    .btn-outline {
+        @apply inline-flex items-center gap-2 rounded-xl border-2 border-accent px-4 py-2 text-sm font-semibold text-accent transition hover:bg-accent-soft focus:outline-none focus:ring-4 focus:ring-accent/10;
+    }
+
+    .link-accent {
+        @apply font-medium text-accent transition hover:text-accent-hover;
+    }
+
+    .price-tag {
+        @apply text-lg font-semibold text-accent;
+    }
 }

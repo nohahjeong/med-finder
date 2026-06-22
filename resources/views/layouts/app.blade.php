@@ -16,23 +16,32 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="min-h-screen bg-slate-50 text-slate-900 antialiased">
-    <header class="border-b border-slate-200 bg-white">
-        <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
-            <a href="{{ route('home') }}" class="text-lg font-semibold tracking-tight text-teal-800">
-                MedFinder
+<body class="flex min-h-screen flex-col text-stone-900 antialiased">
+    <header>
+        <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-5 sm:px-8">
+            <a href="{{ route('home') }}" class="flex items-center gap-3">
+                <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-accent text-white shadow-sm shadow-accent/25">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                </span>
+                <span class="text-lg font-semibold tracking-tight text-stone-900">MedFinder</span>
             </a>
-            <p class="hidden text-sm text-slate-500 sm:block">Brazilian medication search</p>
+            <p class="hidden text-sm text-stone-500 sm:block">Brazilian medication search</p>
         </div>
     </header>
 
-    <main class="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-        @yield('content')
-    </main>
+    <div class="mx-auto flex w-full max-w-5xl flex-1 flex-col px-4 pb-6 sm:px-8 sm:pb-8">
+        <div class="card">
+            <main class="flex flex-1 flex-col px-6 py-8 sm:px-10 sm:py-10">
+                @yield('content')
+            </main>
+        </div>
+    </div>
 
-    <footer class="border-t border-slate-200 bg-white">
-        <div class="mx-auto max-w-5xl px-4 py-6 sm:px-6">
-            <p class="text-center text-xs text-slate-500">
+    <footer class="pb-6">
+        <div class="mx-auto max-w-5xl px-4 sm:px-8">
+            <p class="text-center text-xs text-stone-400">
                 For demonstration only — not medical advice. Prices are CMED PMC 18% (regulated maximum).
             </p>
         </div>

@@ -3,83 +3,88 @@
 @section('title', $query !== '' ? "Search: {$query} — MedFinder" : 'MedFinder — Brazilian Medication Search')
 
 @section('content')
-    <div class="mx-auto max-w-2xl text-center">
-        <h1 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+    <div class="mx-auto w-full max-w-2xl text-center">
+        <p class="text-sm font-medium uppercase tracking-wider text-accent">CMED open data</p>
+        <h1 class="mt-2 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
             Find Brazilian medications
         </h1>
-        <p class="mt-3 text-slate-600">
+        <p class="mt-3 text-stone-500">
             Search by product name or active ingredient. View manufacturer, presentation, and regulated maximum price.
         </p>
     </div>
 
-    <form action="{{ route('home') }}" method="get" class="mx-auto mt-8 max-w-2xl">
+    <form action="{{ route('home') }}" method="get" class="mx-auto mt-8 w-full max-w-2xl">
         <label for="q" class="sr-only">Search medications</label>
-        <div class="flex gap-2">
-            <input id="q" type="search" name="q" value="{{ $query }}"
-                placeholder="e.g. dipirona, paracetamol, VERZENIOS…" autocomplete="off"
-                class="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-base shadow-sm placeholder:text-slate-400 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20">
-            <button type="submit"
-                class="shrink-0 rounded-lg bg-teal-700 px-5 py-3 text-sm font-medium text-white shadow-sm hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+        <div class="flex flex-col gap-3 sm:flex-row">
+            <input
+                id="q"
+                type="search"
+                name="q"
+                value="{{ $query }}"
+                placeholder="e.g. dipirona, paracetamol, VERZENIOS…"
+                autocomplete="off"
+                class="input-field"
+            >
+            <button type="submit" class="btn-primary">
                 Search
             </button>
         </div>
     </form>
 
     @if ($query === '')
-        <p class="mx-auto mt-10 max-w-xl text-center text-sm text-slate-500">
-            Over 25,000 medications from CMED open data. Enter a name or active ingredient to start.
+        <p class="mx-auto mt-auto pt-10 text-center text-sm text-stone-400">
+            Over 25,000 medications indexed. Enter a name or active ingredient to start.
         </p>
     @else
-        <div class="mt-10">
-            <p class="mb-4 text-sm text-slate-600">
+        <div class="mt-10 flex flex-1 flex-col">
+            <p class="mb-5 text-sm text-stone-500">
                 {{ $medications->total() }} result{{ $medications->total() === 1 ? '' : 's' }} for
-                <span class="font-medium text-slate-900">&ldquo;{{ $query }}&rdquo;</span>
+                <span class="font-semibold text-stone-800">&ldquo;{{ $query }}&rdquo;</span>
             </p>
 
             @if ($medications->isEmpty())
-                <div class="rounded-lg border border-slate-200 bg-white px-6 py-10 text-center">
-                    <p class="text-slate-600">No medications matched your search.</p>
-                    <p class="mt-1 text-sm text-slate-500">Try a different name or active ingredient.</p>
+                <div class="flex flex-1 items-center justify-center rounded-2xl border border-dashed border-stone-200 px-6 py-12 text-center">
+                    <div>
+                        <p class="text-stone-600">No medications matched your search.</p>
+                        <p class="mt-1 text-sm text-stone-400">Try a different name or active ingredient.</p>
+                    </div>
                 </div>
             @else
                 @php
-                    $searchContext =
-                        $query !== ''
-                            ? array_filter([
-                                'q' => $query,
-                                'page' => $medications->currentPage() > 1 ? $medications->currentPage() : null,
-                            ])
-                            : [];
+                    $searchContext = array_filter([
+                        'q' => $query,
+                        'page' => $medications->currentPage() > 1 ? $medications->currentPage() : null,
+                    ]);
                 @endphp
-                <ul class="divide-y divide-slate-200 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+                <ul class="-mx-6 divide-y divide-stone-100 sm:-mx-10">
                     @foreach ($medications as $medication)
-                        <li class="px-4 py-4 sm:px-6">
-                            <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                        <li class="px-6 py-5 sm:px-10">
+                            <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                                 <div class="min-w-0 flex-1">
-                                    <h2 class="text-base font-semibold text-slate-900">
+                                    <h2 class="text-base font-semibold text-stone-900">
                                         <a href="{{ route('medications.show', ['medication' => $medication] + $searchContext) }}"
-                                            class="hover:text-teal-800 hover:underline">
+                                            class="link-accent hover:underline">
                                             {{ $medication->name }}
                                         </a>
                                     </h2>
-                                    <p class="mt-1 text-sm text-slate-600">
+                                    <p class="mt-1.5 text-sm text-stone-500">
                                         {{ $medication->active_ingredient }}
                                     </p>
-                                    <p class="mt-2 text-sm text-slate-500">
+                                    <p class="mt-3 text-sm text-stone-400">
                                         {{ $medication->manufacturer }}
                                     </p>
-                                    <p class="mt-1 text-sm text-slate-700">
+                                    <p class="mt-1 text-sm text-stone-600">
                                         {{ $medication->presentation }}
                                     </p>
                                 </div>
-                                <div class="shrink-0 sm:text-right">
+                                <div class="shrink-0 rounded-2xl bg-accent-soft px-4 py-3 sm:text-right">
                                     @if ($medication->price_max !== null)
-                                        <p class="text-lg font-semibold text-teal-800">
+                                        <p class="price-tag">
                                             R$ {{ number_format((float) $medication->price_max, 2, ',', '.') }}
                                         </p>
-                                        <p class="text-xs text-slate-500">PMC max (18%)</p>
+                                        <p class="mt-0.5 text-xs font-medium text-stone-400">PMC max (18%)</p>
                                     @else
-                                        <p class="text-sm text-slate-500">No consumer price</p>
+                                        <p class="text-sm text-stone-400">No consumer price</p>
                                     @endif
                                 </div>
                             </div>
@@ -87,7 +92,7 @@
                     @endforeach
                 </ul>
 
-                <div class="mt-6">
+                <div class="mt-auto pt-8">
                     {{ $medications->links() }}
                 </div>
             @endif
