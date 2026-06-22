@@ -6,8 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', config('app.name', 'MedFinder'))</title>
     <meta name="description" content="@yield('meta_description', 'Search Brazilian medications by name or active ingredient.')">
+    @hasSection('canonical')
+        <link rel="canonical" href="@yield('canonical')">
+    @endif
+    @yield('og')
 
     @fonts
+    @stack('head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 

@@ -42,13 +42,25 @@
                     <p class="mt-1 text-sm text-slate-500">Try a different name or active ingredient.</p>
                 </div>
             @else
+                @php
+                    $searchContext =
+                        $query !== ''
+                            ? array_filter([
+                                'q' => $query,
+                                'page' => $medications->currentPage() > 1 ? $medications->currentPage() : null,
+                            ])
+                            : [];
+                @endphp
                 <ul class="divide-y divide-slate-200 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
                     @foreach ($medications as $medication)
                         <li class="px-4 py-4 sm:px-6">
                             <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                                 <div class="min-w-0 flex-1">
                                     <h2 class="text-base font-semibold text-slate-900">
-                                        {{ $medication->name }}
+                                        <a href="{{ route('medications.show', ['medication' => $medication] + $searchContext) }}"
+                                            class="hover:text-teal-800 hover:underline">
+                                            {{ $medication->name }}
+                                        </a>
                                     </h2>
                                     <p class="mt-1 text-sm text-slate-600">
                                         {{ $medication->active_ingredient }}
