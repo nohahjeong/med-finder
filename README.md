@@ -2,6 +2,10 @@
 
 Search Brazilian medications by name or active ingredient and view manufacturer, presentation, and the government-regulated maximum price - on clean, SEO-friendly pages.
 
+> **Portfolio project** by [Noh Ah Jeong](https://www.linkedin.com/in/noh-ah-jeong/) — a self-contained Laravel + MySQL build I made to demonstrate my full-stack work: importing a real 25,000-row government dataset, search with pagination, and SEO / structured-data (JSON-LD) detail pages. AI-assisted while building; I can walk through any part of the code.
+>
+> **Noh Ah Jeong** — Full-Stack Developer (Laravel · PHP · MySQL), São Paulo, Brazil · [LinkedIn](https://www.linkedin.com/in/noh-ah-jeong/) · [GitHub](https://github.com/nohahjeong)
+
 ## Screenshots
 
 ![Home](screenshots/home.png)
