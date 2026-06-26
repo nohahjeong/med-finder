@@ -17,9 +17,25 @@
     <script type="application/ld+json">
         {!! json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
     </script>
+    <script type="application/ld+json">
+        {!! json_encode($breadcrumbJsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
 @endpush
 
 @section('content')
+    <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex flex-wrap items-center gap-2 text-sm text-stone-400">
+            @foreach ($breadcrumbs as $crumb)
+                @if (! $loop->last)
+                    <li><a href="{{ $crumb['url'] }}" class="hover:text-accent">{{ $crumb['name'] }}</a></li>
+                    <li aria-hidden="true" class="text-stone-300">›</li>
+                @else
+                    <li class="font-medium text-stone-600" aria-current="page">{{ $crumb['name'] }}</li>
+                @endif
+            @endforeach
+        </ol>
+    </nav>
+
     <nav class="mb-8">
         <a href="{{ $backUrl }}" class="btn-outline">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -69,5 +85,15 @@
                 </div>
             @endif
         </dl>
+
+        <details class="mt-8 rounded-lg border border-stone-200 bg-stone-50">
+            <summary class="cursor-pointer px-4 py-3 text-sm font-medium text-stone-600">
+                🔎 Structured data for AI &amp; search (schema.org/Drug)
+            </summary>
+            <p class="px-4 pt-1 text-xs text-stone-400">
+                This page exposes the data below as JSON-LD in its &lt;head&gt; so search engines and AI assistants can read and cite it.
+            </p>
+            <pre class="mt-2 overflow-x-auto border-t border-stone-200 px-4 py-3 text-xs text-stone-700"><code>{{ json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) }}</code></pre>
+        </details>
     </article>
 @endsection

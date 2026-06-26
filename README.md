@@ -14,11 +14,53 @@ Search Brazilian medications by name or active ingredient and view manufacturer,
 |---|---|
 | ![Search and results](screenshots/search.png) | ![Medication detail](screenshots/detail.png) |
 
+> The detail page surfaces a **breadcrumb** and a collapsible **"Structured data" panel** — so the SEO/structured-data work is visible in the app, not just in the page source.
+
 ## Features
 - Search by medication name or active ingredient, with pagination
 - Detail pages with manufacturer, presentation, regulated price, and ANVISA registration
-- SEO-friendly URLs (`/medications/{slug}`) + per-page meta tags + Open Graph + JSON-LD (`schema.org/Drug`)
+- Full SEO / structured-data layer — see [SEO & Structured Data](#seo--structured-data) below
 - Data imported from Brazilian open data via `medications:import`
+
+## SEO & Structured Data
+
+The SEO layer is a first-class feature, not an afterthought. Each detail page emits:
+
+- Dynamic `<title>` and a meta `description` (capped at 160 chars)
+- **Open Graph** tags + a `canonical` link
+- **`schema.org/Drug` JSON-LD** — name, active ingredient, manufacturer, the ANVISA
+  registration (as an `identifier`), and the regulated price (as an `offers`/`Offer`)
+- **`schema.org/BreadcrumbList` JSON-LD** + a matching visible breadcrumb
+- SEO-friendly slug URLs (`/medications/{slug}`)
+
+To make this *visible* (it normally lives only in `<head>`), each detail page also renders a
+collapsible **"Structured data" panel** showing the exact JSON-LD it emits.
+
+Example JSON-LD (Dipirona Sódica):
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Drug",
+  "name": "DIPIRONA SÓDICA",
+  "activeIngredient": "DIPIRONA",
+  "description": "1000 MG COM CT BL AL PLAS AMB X 30",
+  "url": "https://example.com/medications/dipirona-sodica",
+  "manufacturer": { "@type": "Organization", "name": "PRATI DONADUZZI & CIA LTDA" },
+  "identifier": { "@type": "PropertyValue", "propertyID": "ANVISA registration", "value": "1256800410339" },
+  "offers": { "@type": "Offer", "price": "55.62", "priceCurrency": "BRL", "availability": "https://schema.org/InStock" }
+}
+```
+
+Validated with the [Google Rich Results Test](https://search.google.com/test/rich-results) (`Drug` + `BreadcrumbList` detected, no errors):
+
+![Rich Results validation](screenshots/rich-results.png)
+
+### GEO / AI-search
+Structured data plus clean, semantic HTML help AI search engines (ChatGPT, Perplexity,
+Google AI Overviews) read, understand, and cite the page — not only traditional search
+crawlers. These are the same GEO (Generative Engine Optimization) principles I apply in
+production work: make the meaning machine-readable so the content is citable.
 
 ## Tech
 - Laravel 13 (PHP 8.3) · Blade · MySQL · Tailwind CSS · Vite

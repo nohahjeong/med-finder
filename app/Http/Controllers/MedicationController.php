@@ -34,6 +34,11 @@ class MedicationController extends Controller
             'seoTitle' => "{$medication->name} — {$medication->presentation}",
             'seoDescription' => $this->seoDescription($medication),
             'jsonLd' => $this->jsonLd($medication),
+            'breadcrumbs' => [
+                ['name' => 'Home', 'url' => route('home')],
+                ['name' => $medication->name, 'url' => route('medications.show', $medication)],
+            ],
+            'breadcrumbJsonLd' => $this->breadcrumbJsonLd($medication),
         ]);
     }
 
@@ -111,5 +116,20 @@ class MedicationController extends Controller
         }
 
         return $data;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function breadcrumbJsonLd(Medication $medication): array
+    {
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => route('home')],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => $medication->name, 'item' => route('medications.show', $medication)],
+            ],
+        ];
     }
 }
