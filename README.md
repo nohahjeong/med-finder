@@ -54,7 +54,9 @@ Example JSON-LD (Dipirona Sódica):
 }
 ```
 
-The JSON-LD validates cleanly with the [Google Rich Results Test](https://search.google.com/test/rich-results) and the [schema.org validator](https://validator.schema.org/) (`Drug` + `BreadcrumbList`, no errors).
+The structured data parses cleanly in the [schema.org validator](https://validator.schema.org/) (paste the page HTML — both `Drug` and `BreadcrumbList` are recognized, no errors). `BreadcrumbList` is also a Google-supported rich result, testable in the [Rich Results Test](https://search.google.com/test/rich-results).
+
+![schema.org validation](screenshots/structured-data-validation.png)
 
 ### GEO / AI-search
 Structured data plus clean, semantic HTML help AI search engines (ChatGPT, Perplexity,
