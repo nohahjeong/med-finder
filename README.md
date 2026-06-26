@@ -34,7 +34,9 @@ The SEO layer is a first-class feature, not an afterthought. Each detail page em
 - SEO-friendly slug URLs (`/medications/{slug}`)
 
 To make this *visible* (it normally lives only in `<head>`), each detail page also renders a
-collapsible **"Structured data" panel** showing the exact JSON-LD it emits.
+collapsible **"Structured data" panel** showing the exact JSON-LD it emits:
+
+![Structured data panel](screenshots/structured-data.png)
 
 Example JSON-LD (Dipirona Sódica):
 
@@ -52,9 +54,7 @@ Example JSON-LD (Dipirona Sódica):
 }
 ```
 
-Validated with the [Google Rich Results Test](https://search.google.com/test/rich-results) (`Drug` + `BreadcrumbList` detected, no errors):
-
-![Rich Results validation](screenshots/rich-results.png)
+The JSON-LD validates cleanly with the [Google Rich Results Test](https://search.google.com/test/rich-results) and the [schema.org validator](https://validator.schema.org/) (`Drug` + `BreadcrumbList`, no errors).
 
 ### GEO / AI-search
 Structured data plus clean, semantic HTML help AI search engines (ChatGPT, Perplexity,
